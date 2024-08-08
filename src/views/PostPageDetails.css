@@ -1,0 +1,39 @@
+body {
+    background-color: #f0f2f5;
+  }
+  
+  .navbar-light .navbar-brand {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .navbar-light .navbar-nav .nav-link {
+    font-weight: 600;
+    color: #555;
+  }
+  
+  .container {
+    margin-top: 2rem;
+  }
+  
+  .card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-title {
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
+  
+  .button-danger {
+    background-color: #ff4d4f;
+    border-color: #ff4d4f;
+  }
+  
+  .button-danger:hover {
+    background-color: #ff7875;
+    border-color: #ff7875;
+  }
+  
