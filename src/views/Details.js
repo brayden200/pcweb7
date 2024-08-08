@@ -6,24 +6,24 @@ import { auth, db, storage } from "../firebase";
 import { signOut } from "firebase/auth";
 import { deleteDoc, doc, getDoc, getDocs, collection } from "firebase/firestore";
 import { ref, deleteObject } from "firebase/storage";
-import "./PostPageDetails.css";
+import "./SongDetails.css";
 
-export default function PostPageDetails() {
+export default function SongDetails() {
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [audio, setAudio] = useState("");
-  const [postIds, setPostIds] = useState([]);
+  const [songIds, setSongIds] = useState([]);
   const params = useParams();
   const id = params.id;
   const [user, loading] = useAuthState(auth);
   const navigate = useNavigate();
   const audioRef = useRef(null);
 
-  async function deletePost(id) {
+  async function deleteSong(id) {
     const postDocument = await getDoc(doc(db, "posts", id));
-    const post = postDocument.data();
-    const imageRef = ref(storage, `images/${post.imageName}`);
-    const audioRef = ref(storage, `audios/${post.audioName}`);
+    const song = postDocument.data();
+    const imageRef = ref(storage, `images/${song.imageName}`);
+    const audioRef = ref(storage, `audios/${song.audioName}`);
 
     // Delete image and audio from Firebase Storage
     deleteObject(imageRef).then(() => {
@@ -43,25 +43,25 @@ export default function PostPageDetails() {
     navigate("/");
   }
 
-  async function getPost(id) {
+  async function getSong(id) {
     const postDocument = await getDoc(doc(db, "posts", id));
-    const post = postDocument.data();
-    setName(post.name);
-    setImage(post.image);
-    setAudio(post.audio);
+    const song = postDocument.data();
+    setName(song.name);
+    setImage(song.image);
+    setAudio(song.audio);
   }
 
-  async function fetchPostIds() {
+  async function fetchSongIds() {
     const querySnapshot = await getDocs(collection(db, "posts"));
     const ids = querySnapshot.docs.map(doc => doc.id);
-    setPostIds(ids);
+    setSongIds(ids);
   }
 
   useEffect(() => {
     if (loading) return;
     if (!user) navigate("/login");
-    getPost(id);
-    fetchPostIds();
+    getSong(id);
+    fetchSongIds();
   }, [id, navigate, user, loading]);
 
   useEffect(() => {
@@ -75,10 +75,10 @@ export default function PostPageDetails() {
   }, [audio]);
 
   function handleNext() {
-    const currentIndex = postIds.indexOf(id);
-    const nextIndex = (currentIndex + 1) % postIds.length;
-    const nextId = postIds[nextIndex];
-    navigate(`/post/${nextId}`);
+    const currentIndex = songIds.indexOf(id);
+    const nextIndex = (currentIndex + 1) % songIds.length;
+    const nextId = songIds[nextIndex];
+    navigate(`/song/${nextId}`);
   }
 
   return (
@@ -87,7 +87,7 @@ export default function PostPageDetails() {
         <Container>
           <Navbar.Brand href="/">Music App</Navbar.Brand>
           <Nav>
-            <Nav.Link href="/add">New Post</Nav.Link>
+            <Nav.Link href="/add">New Song</Nav.Link>
             <Nav.Link onClick={() => signOut(auth)}>Sign Out</Nav.Link>
           </Nav>
         </Container>
@@ -113,7 +113,7 @@ export default function PostPageDetails() {
                   <div>No audio file available</div>
                 )}
                 <div className="d-flex justify-content-between mt-3">
-                  <Button variant="danger" onClick={() => deletePost(id)}>Delete</Button>
+                  <Button variant="danger" onClick={() => deleteSong(id)}>Delete</Button>
                   <Button variant="secondary" onClick={handleNext}>Next</Button>
                 </div>
               </Card.Body>

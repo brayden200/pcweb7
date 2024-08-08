@@ -7,7 +7,7 @@ import { auth, db, storage } from "../firebase";
 import { signOut } from "firebase/auth";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
-export default function PostPageAdd() {
+export default function AddSong() {
   const [user, loading] = useAuthState(auth);
   const [name, setName] = useState("");
   const [image, setImage] = useState(null);
@@ -19,7 +19,7 @@ export default function PostPageAdd() {
   const [uploading, setUploading] = useState(false);
   const navigate = useNavigate();
 
-  async function addPost() {
+  async function addSong() {
     setUploading(true);
     try {
       const imageReference = ref(storage, `images/${image.name}`);
@@ -70,7 +70,7 @@ export default function PostPageAdd() {
         <Container>
           <Navbar.Brand href="/">Music App</Navbar.Brand>
           <Nav>
-            <Nav.Link href="/add">New Post</Nav.Link>
+            <Nav.Link href="/add">New Song</Nav.Link>
             <Nav.Link onClick={() => signOut(auth)}>Sign Out</Nav.Link>
           </Nav>
         </Container>
@@ -132,7 +132,7 @@ export default function PostPageAdd() {
           {previewAudio && (
             <audio controls src={previewAudio} />
           )}
-          <Button variant="primary" onClick={addPost} disabled={uploading}>
+          <Button variant="primary" onClick={addSong} disabled={uploading}>
             {uploading ? "Uploading..." : "Submit"}
           </Button>
         </Form>

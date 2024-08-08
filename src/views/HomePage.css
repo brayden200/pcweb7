@@ -12,15 +12,15 @@ body {
     color: #555;
   }
   
-  .post-page-home {
+  .song-page-home {
     margin-top: 2rem;
   }
   
-  .post-link {
+  .song-link {
     text-decoration: none;
   }
   
-  .post-image-container {
+  .song-image-container {
     position: relative;
     width: 100%;
     height: 0;
@@ -31,11 +31,11 @@ body {
     transition: transform 0.3s ease;
   }
   
-  .post-image-container:hover {
+  .song-image-container:hover {
     transform: scale(1.05);
   }
   
-  .post-image {
+  .song-image {
     position: absolute;
     top: 0;
     left: 0;
